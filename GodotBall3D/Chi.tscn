@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://clw66ltodbfwm"]
+
+[ext_resource type="Script" path="res://Chi.gd" id="1_5j33d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clqwu"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_croxv"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0j123"]
+margin = 0.05
+radius = 0.25
+
+[node name="Chi" type="StaticBody3D"]
+collision_layer = 2
+script = ExtResource("1_5j33d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_clqwu")
+mesh = SubResource("SphereMesh_croxv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_0j123")

@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://ckkkg8qqa48q8"]
+
+[ext_resource type="PackedScene" uid="uid://clw66ltodbfwm" path="res://Chi.tscn" id="1_svq54"]
+[ext_resource type="PackedScene" uid="uid://p3ebr0wj05cg" path="res://Collider.tscn" id="1_yrntx"]
+[ext_resource type="Script" path="res://Player.gd" id="3_dugta"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k1bek"]
+albedo_color = Color(0, 0.2, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3uul1"]
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xcinw"]
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="SphereMesh" id="SphereMesh_78uo8"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_co1yq"]
+
+[node name="World" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.258819, 0.482963, -0.836516, 0, 0.866025, 0.5, 0.965926, -0.12941, 0.224144, -16.4975, 5.71539, 7.86691)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="StaticBody3D-Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D-Floor"]
+material_override = SubResource("StandardMaterial3D_k1bek")
+mesh = SubResource("BoxMesh_3uul1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D-Floor"]
+shape = SubResource("BoxShape3D_xcinw")
+
+[node name="Collider1" parent="." instance=ExtResource("1_yrntx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5199, 0, -5.60707)
+
+[node name="Collider2" parent="." instance=ExtResource("1_yrntx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.27431, 0, -12.0677)
+
+[node name="Collider3" parent="." instance=ExtResource("1_yrntx")]
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -1.38665, -1.82322, 4.77515)
+
+[node name="Collider4" parent="." instance=ExtResource("1_yrntx")]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -1.38665, -0.989619, 10.1612)
+
+[node name="Collider5" parent="." instance=ExtResource("1_yrntx")]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -10.1453, 0.0705934, 15.2953)
+
+[node name="Chi1" parent="." instance=ExtResource("1_svq54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.31755, 0.709827, -3)
+
+[node name="Chi2" parent="." instance=ExtResource("1_svq54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32863, 2.20943, 4.73872)
+
+[node name="Chi3" parent="." instance=ExtResource("1_svq54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.63019, 3.02712, 4.73872)
+
+[node name="Chi4" parent="." instance=ExtResource("1_svq54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.66655, 1.02712, 10.3844)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.50188, 10.4099)
+script = ExtResource("3_dugta")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("SphereMesh_78uo8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_co1yq")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="RigidBody3D"]
+remote_path = NodePath("../../Node3D")
+update_rotation = false
+update_scale = false
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.50188, 10.4099)
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 4, 4)
+far = 1000.0
+
+[connection signal="body_entered" from="RigidBody3D" to="RigidBody3D" method="_on_body_entered"]
+[connection signal="body_exited" from="RigidBody3D" to="RigidBody3D" method="_on_body_exited"]
