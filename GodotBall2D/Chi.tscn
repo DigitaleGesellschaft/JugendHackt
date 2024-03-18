@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dko2ebkihv6qr"]
+
+[ext_resource type="Texture2D" uid="uid://bjs7cbpf8ihrf" path="res://Chi.png" id="1_3k7rb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nq54m"]
+radius = 16.0
+
+[node name="Chi" type="StaticBody2D"]
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3k7rb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_nq54m")
