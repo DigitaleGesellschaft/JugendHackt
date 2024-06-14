@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="template.css">
+
+	<link rel="icon" href="icon-64x64.png" type="image/png">
+	<link rel="script" href="template.js">
+
+	<title>Template</title>
+
+	<style>
+		body {
+			font-family: 'Ubuntu', sans-serif;
+		}
+
+		@keyframes left-to-right {
+			from {
+				left: 0%;
+			}
+
+			to {
+				left: 80%;
+			}
+		}
+
+		.animate-js {
+			position: relative;
+		}
+
+		.animate-css {
+			position: relative;
+			animation-duration: 10s;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+			animation-name: left-to-right;
+		}
+
+		canvas {
+			border: 1px solid #f0f;
+		}
+	</style>
+	<script type="module">
+
+		function timeNowSeconds() {
+			return Date.now() / 1000;
+		}
+
+		function animateDOM() {
+			const element = document.querySelector('.animate-js');
+			const x = (timeNowSeconds() * 100) % (window.innerWidth * 0.8);
+			element.style.left = x + 'px';
+		}
+
+		/*
+		https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
+		*/
+
+		function animateCanvas() {
+			const canvas = document.getElementById('canvas');
+			const ctx = canvas.getContext('2d');
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			const x = (timeNowSeconds() * 100) % (canvas.width);
+			ctx.fillStyle = '#f0f';
+			ctx.fillRect(x, 10, 32, 32);
+
+			// TODO also use sprite
+		}
+
+		function animate() {
+			animateDOM();
+			animateCanvas();
+			requestAnimationFrame(animate);
+		}
+
+		function main() {
+			const canvas = document.getElementById('canvas');
+			canvas.width = 600;
+			canvas.height = 100;
+			animate();
+		}
+
+		document.addEventListener('DOMContentLoaded', main);
+
+	</script>
+
+<body>
+
+	<header>Header</header>
+
+	<h1>Animations</h1>
+
+	<h2>CSS</h2>
+
+	<div>
+		<img class="animate-css" alt="Sprite" src="sprite.png">
+	</div>
+
+	<h2>JavaScript - DOM</h2>
+
+	<div>
+		<img class="animate-js" alt="Sprite" src="sprite.png">
+	</div>
+
+	<h2>JavaScript - Canvas</h2>
+
+	<div>
+		<canvas id="canvas"></canvas>
+	</div>
+
+	<footer>Footer</footer>
+
+</body>
+
+</html>
